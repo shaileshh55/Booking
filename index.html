@@ -489,6 +489,8 @@
           // Show admin panel if user is admin
           if (state.user.isAdmin) {
             elements.adminPanel.classList.remove('hidden');
+            // Only add event listener if admin
+            elements.resetBookingsBtn.addEventListener('click', resetAllBookings);
           } else {
             elements.adminPanel.classList.add('hidden');
           }
@@ -511,6 +513,10 @@
         // Show admin panel if user is admin
         if (state.user.isAdmin) {
           elements.adminPanel.classList.remove('hidden');
+          // Only add event listener if admin
+          elements.resetBookingsBtn.addEventListener('click', resetAllBookings);
+        } else {
+          elements.adminPanel.classList.add('hidden');
         }
         
         await loadBookings();
@@ -669,9 +675,7 @@
 
     elements.logoutBtn.addEventListener('click', logout);
     
-    if (elements.resetBookingsBtn) {
-      elements.resetBookingsBtn.addEventListener('click', resetAllBookings);
-    }
+    // Removed the event listener here - we now add it only for admins in login and checkCurrentUser functions
 
     // Initialize the application
     document.addEventListener('DOMContentLoaded', async () => {
