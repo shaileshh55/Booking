@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STUDENT SEAT BOOKING 3rd YEAR</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #3498db;
+      --primary-dark: #2980b9;
+      --secondary: #2ecc71;
+      --danger: #e74c3c;
+      --warning: #f39c12;
+      --light: #f5f5f5;
+      --dark: #333;
+      --gray: #95a5a6;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light);
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 15px 0;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    .login-container {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 30px;
+      max-width: 400px;
+      margin: 50px auto;
+    }
+
+    .login-container h2 {
+      text-align: center;
+      color: var(--primary);
+      margin-top: 0;
+    }
+
+    .main-layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .benches-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .bench {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #e5e7eb;
+      padding: 15px;
+      border-radius: 12px;
+      width: 250px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      position: relative;
+    }
+
+    .bench-label {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--primary);
+      color: white;
+      padding: 2px 10px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .seat {
+      width: 60px;
+      height: 60px;
+      margin: 0 8px;
+      border-radius: 8px;
+      border: 2px solid var(--gray);
+      background-color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .seat:hover:not(.booked) {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-color: var(--primary);
+    }
+
+    .seat.booked {
+      background-color: var(--danger);
+      color: white;
+      cursor: not-allowed;
+      border-color: var(--danger);
+    }
+
+    .seat.your-booking {
+      background-color: var(--secondary);
+      color: white;
+      border-color: var(--secondary);
+    }
+
+    .seat-number {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      text-align: center;
+      transition: all 0.3s ease;
+      margin: 5px;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn-danger {
+      background-color: var(--danger);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background-color: #c0392b;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .legend-color {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      border: 1px solid #555;
+    }
+
+    .available-color { background-color: white; }
+    .booked-color { background-color: var(--danger); }
+    .your-booking-color { background-color: var(--secondary); }
+
+    .user-info {
+      display: flex;
+      justify-content: space-between;
+      background-color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .tooltip {
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .seat:hover .tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .admin-panel {
+      background-color: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 30px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .admin-panel h3 {
+      margin-top: 0;
+      color: var(--primary);
+    }
+
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100px;
+    }
+
+    .spinner {
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border-left-color: var(--primary);
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .alert {
+      padding: 10px 15px;
+      border-radius: 4px;
+      margin-bottom: 15px;
+    }
+
+    .alert-danger {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .alert-success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .benches-container {
+        flex-direction: column;
+      }
+      
+      .bench {
+        width: 220px;
+      }
+      
+      .seat {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>STUDENT SEAT BOOKING 3rd YEAR</h1>
+  </header>
+
+  <div class="container">
+    <!-- Login Form -->
+    <div id="loginContainer" class="login-container">
+      <h2>Login</h2>
+      <div id="loginAlert" class="alert alert-danger hidden"></div>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+      </form>
+    </div>
+
+    <!-- Main App (hidden initially) -->
+    <div id="mainApp" class="hidden">
+      <div class="user-info">
+        <div>
+          <strong>Welcome, <span id="userName">User</span>!</strong>
+        </div>
+        <button id="logoutBtn" class="btn btn-danger">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+
+      <div id="alertContainer"></div>
+
+      <div class="main-layout">
+        <div class="legend">
+          <div class="legend-item">
+            <span class="legend-color available-color"></span> Available
+          </div>
+          <div class="legend-item">
+            <span class="legend-color booked-color"></span> Booked
+          </div>
+          <div class="legend-item">
+            <span class="legend-color your-booking-color"></span> Your Booking
+          </div>
+        </div>
+
+        <div id="loading" class="loading">
+          <div class="spinner"></div>
+        </div>
+
+        <div id="benchesContainer" class="benches-container hidden">
+          <div class="column" id="column1"></div>
+          <div class="column" id="column2"></div>
+        </div>
+      </div>
+
+      <!-- Admin Panel (visible only for admins) -->
+      <div id="adminPanel" class="admin-panel hidden">
+        <h3>Admin Panel</h3>
+        <button id="resetBookingsBtn" class="btn btn-danger">
+          <i class="fas fa-trash"></i> Reset All Bookings
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Global state
+    const state = {
+      user: null,
+      bookings: {},
+      loading: true
+    };
+
+    // DOM elements
+    const elements = {
+      loginContainer: document.getElementById('loginContainer'),
+      loginForm: document.getElementById('loginForm'),
+      loginAlert: document.getElementById('loginAlert'),
+      mainApp: document.getElementById('mainApp'),
+      userName: document.getElementById('userName'),
+      logoutBtn: document.getElementById('logoutBtn'),
+      benchesContainer: document.getElementById('benchesContainer'),
+      loading: document.getElementById('loading'),
+      adminPanel: document.getElementById('adminPanel'),
+      resetBookingsBtn: document.getElementById('resetBookingsBtn'),
+      alertContainer: document.getElementById('alertContainer'),
+      column1: document.getElementById('column1'),
+      column2: document.getElementById('column2')
+    };
+
+    // Configuration
+    const config = {
+      benchesPerColumn: 7,
+      seatsPerBench: 3,
+      apiBase: window.location.origin + '/api',
+    };
+
+    // Helper functions
+    function showAlert(message, type = 'danger', container = elements.alertContainer) {
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `alert alert-${type}`;
+      alertDiv.textContent = message;
+      
+      container.innerHTML = '';
+      container.appendChild(alertDiv);
+      
+      // Auto dismiss after 5 seconds
+      setTimeout(() => {
+        alertDiv.remove();
+      }, 5000);
+    }
+
+    function setLoading(isLoading) {
+      state.loading = isLoading;
+      elements.loading.classList.toggle('hidden', !isLoading);
+      elements.benchesContainer.classList.toggle('hidden', isLoading);
+    }
+
+    // API functions
+    async function apiRequest(endpoint, method = 'GET', body = null) {
+      try {
+        const options = {
+          method,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include'
+        };
+
+        if (body) {
+          options.body = JSON.stringify(body);
+        }
+
+        const response = await fetch(`${config.apiBase}${endpoint}`, options);
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || 'Something went wrong');
+        }
+
+        return data;
+      } catch (err) {
+        console.error(`API Error (${endpoint}):`, err);
+        throw err;
+      }
+    }
+
+    async function checkCurrentUser() {
+      try {
+        const response = await apiRequest('/current-user');
+        if (response.user) {
+          state.user = response.user;
+          elements.userName.textContent = state.user.name || state.user.username;
+          elements.loginContainer.classList.add('hidden');
+          elements.mainApp.classList.remove('hidden');
+          
+          // Show admin panel if user is admin
+          if (state.user.isAdmin) {
+            elements.adminPanel.classList.remove('hidden');
+          } else {
+            elements.adminPanel.classList.add('hidden');
+          }
+          
+          await loadBookings();
+        }
+      } catch (err) {
+        console.error('Error checking current user:', err);
+      }
+    }
+
+    async function login(username, password) {
+      try {
+        const response = await apiRequest('/login', 'POST', { username, password });
+        state.user = response.user;
+        elements.userName.textContent = state.user.name || state.user.username;
+        elements.loginContainer.classList.add('hidden');
+        elements.mainApp.classList.remove('hidden');
+        
+        // Show admin panel if user is admin
+        if (state.user.isAdmin) {
+          elements.adminPanel.classList.remove('hidden');
+        }
+        
+        await loadBookings();
+      } catch (err) {
+        elements.loginAlert.textContent = err.message;
+        elements.loginAlert.classList.remove('hidden');
+      }
+    }
+
+    async function logout() {
+      try {
+        await apiRequest('/logout', 'POST');
+        state.user = null;
+        elements.mainApp.classList.add('hidden');
+        elements.loginContainer.classList.remove('hidden');
+        elements.loginAlert.classList.add('hidden');
+        elements.loginForm.reset();
+      } catch (err) {
+        showAlert(err.message);
+      }
+    }
+
+    async function loadBookings() {
+      try {
+        setLoading(true);
+        const bookings = await apiRequest('/bookings');
+        state.bookings = bookings;
+        renderBenches();
+      } catch (err) {
+        showAlert(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    async function bookSeat(bench, seat) {
+      try {
+        await apiRequest('/book', 'POST', { bench, seat });
+        await loadBookings();
+        showAlert('Seat booked successfully!', 'success');
+      } catch (err) {
+        showAlert(err.message);
+      }
+    }
+
+    async function cancelBooking(bench, seat) {
+      try {
+        await apiRequest('/cancel', 'POST', { bench, seat });
+        await loadBookings();
+        showAlert('Booking cancelled successfully!', 'success');
+      } catch (err) {
+        showAlert(err.message);
+      }
+    }
+
+    async function resetAllBookings() {
+      if (!confirm('Are you sure you want to reset all bookings? This action cannot be undone.')) {
+        return;
+      }
+      
+      try {
+        await apiRequest('/reset-bookings', 'POST');
+        await loadBookings();
+        showAlert('All bookings have been reset', 'success');
+      } catch (err) {
+        showAlert(err.message);
+      }
+    }
+
+    // UI functions
+    function renderBenches() {
+      elements.column1.innerHTML = '';
+      elements.column2.innerHTML = '';
+      
+      renderBenchColumn(elements.column1, 1);
+      renderBenchColumn(elements.column2, 8);
+    }
+
+    function renderBenchColumn(container, startBench) {
+      for (let i = 0; i < config.benchesPerColumn; i++) {
+        const benchNumber = startBench + i;
+        const benchDiv = document.createElement('div');
+        benchDiv.className = 'bench';
+        
+        // Add bench label
+        const benchLabel = document.createElement('div');
+        benchLabel.className = 'bench-label';
+        benchLabel.textContent = `Bench ${benchNumber}`;
+        benchDiv.appendChild(benchLabel);
+
+        for (let seatNumber = 1; seatNumber <= config.seatsPerBench; seatNumber++) {
+          const seatDiv = document.createElement('div');
+          seatDiv.className = 'seat';
+          
+          // Add seat number
+          const seatNumberSpan = document.createElement('span');
+          seatNumberSpan.className = 'seat-number';
+          seatNumberSpan.textContent = seatNumber;
+          seatDiv.appendChild(seatNumberSpan);
+
+          const seatId = `bench${benchNumber}_seat${seatNumber}`;
+          const booking = state.bookings[seatId];
+          
+          // Create tooltip
+          const tooltip = document.createElement('div');
+          tooltip.className = 'tooltip';
+          
+          if (booking) {
+            // Check if it's the user's own booking
+            if (state.user && booking.username === state.user.username) {
+              seatDiv.classList.add('your-booking');
+              tooltip.textContent = `Your booking`;
+              
+              // Add cancel button for own bookings
+              seatDiv.addEventListener('click', () => {
+                if (confirm('Do you want to cancel your booking?')) {
+                  cancelBooking(benchNumber, seatNumber);
+                }
+              });
+            } else {
+              seatDiv.classList.add('booked');
+              tooltip.textContent = `Booked by ${booking.name || booking.username}`;
+              
+              // Admins can cancel any booking
+              if (state.user && state.user.isAdmin) {
+                seatDiv.addEventListener('click', () => {
+                  if (confirm(`Do you want to cancel ${booking.name || booking.username}'s booking?`)) {
+                    cancelBooking(benchNumber, seatNumber);
+                  }
+                });
+              }
+            }
+          } else {
+            tooltip.textContent = `Bench ${benchNumber}, Seat ${seatNumber}`;
+            
+            seatDiv.addEventListener('click', () => {
+              bookSeat(benchNumber, seatNumber);
+            });
+          }
+          
+          seatDiv.appendChild(tooltip);
+          benchDiv.appendChild(seatDiv);
+        }
+
+        container.appendChild(benchDiv);
+      }
+    }
+
+    // Event listeners
+    elements.loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      login(username, password);
+    });
+
+    elements.logoutBtn.addEventListener('click', logout);
+    
+    if (elements.resetBookingsBtn) {
+      elements.resetBookingsBtn.addEventListener('click', resetAllBookings);
+    }
+
+    // Initialize the application
+    document.addEventListener('DOMContentLoaded', async () => {
+      await checkCurrentUser();
+    });
+  </script>
+</body>
+</html>

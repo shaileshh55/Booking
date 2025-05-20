@@ -1,0 +1,38 @@
+{
+  "bench6_seat1": {
+    "username": "admin",
+    "bookedAt": "2025-05-19T14:09:44.275Z"
+  },
+  "bench1_seat1": {
+    "username": "admin",
+    "bookedAt": "2025-05-19T14:09:45.340Z"
+  },
+  "bench3_seat1": {
+    "username": "admin",
+    "bookedAt": "2025-05-19T14:09:47.701Z"
+  },
+  "bench4_seat2": {
+    "username": "admin",
+    "bookedAt": "2025-05-19T14:09:49.122Z"
+  },
+  "bench1_seat2": {
+    "username": "admin",
+    "bookedAt": "2025-05-20T10:26:29.402Z"
+  },
+  "bench2_seat1": {
+    "username": "admin",
+    "bookedAt": "2025-05-20T10:26:30.737Z"
+  },
+  "bench2_seat2": {
+    "username": "admin",
+    "bookedAt": "2025-05-20T10:26:31.711Z"
+  },
+  "bench4_seat3": {
+    "username": "admin",
+    "bookedAt": "2025-05-20T10:26:34.439Z"
+  },
+  "bench8_seat1": {
+    "username": "admin",
+    "bookedAt": "2025-05-20T10:26:35.949Z"
+  }
+}

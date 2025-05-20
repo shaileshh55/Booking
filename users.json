@@ -1,0 +1,16 @@
+{
+  "admin": {
+    "password": "admin123",
+    "isAdmin": true
+  },
+  "student1": {
+    "password": "student1",
+    "name": "John Doe",
+    "isAdmin": false
+  },
+  "student2": {
+    "password": "student2",
+    "name": "Jane Smith",
+    "isAdmin": false
+  }
+}
