@@ -16,11 +16,51 @@ if (!fs.existsSync(BOOKINGS_FILE)) {
 
 if (!fs.existsSync(USERS_FILE)) {
   fs.writeFileSync(USERS_FILE, JSON.stringify({
-    "admin": { password: "admin123", isAdmin: true },
-    "student1": { password: "student1", name: "John Doe", isAdmin: false },
-    "student2": { password: "student2", name: "Jane Smith", isAdmin: false }
-  }, null, 2));
+  "admin": { "password": "admin123", "isAdmin": true },
+  "student1": { "password": "student1", "name": "John Doe", "isAdmin": false },
+  "student2": { "password": "student2", "name": "Jane Smith", "isAdmin": false },
+  "23202001@rmd.ac.in": { "password": "111523202003", "name": "ANEESH V", "isAdmin": false },
+  "23202009@rmd.ac.in": { "password": "111523202009", "name": "BOMMISETTY M V S S S HRITHIK", "isAdmin": false },
+  "23202010@rmd.ac.in": { "password": "111523202010", "name": "CHARAN K", "isAdmin": false },
+  "23202011@rmd.ac.in": { "password": "111523202011", "name": "DHARSHAN KUMAR S", "isAdmin": false },
+  "23202013@rmd.ac.in": { "password": "111523202013", "name": "FREDRICK OLIVER R", "isAdmin": false },
+  "23202015@rmd.ac.in": { "password": "111523202015", "name": "GOLLAPALLI AMAR VENKAT SRI KRISHNAM RAJ", "isAdmin": false },
+  "23202016@rmd.ac.in": { "password": "111523202016", "name": "GOWTHAM E", "isAdmin": false },
+  "23202017@rmd.ac.in": { "password": "111523202017", "name": "GOWTHAM K", "isAdmin": false },
+  "23202018@rmd.ac.in": { "password": "111523202018", "name": "HARI RAM C", "isAdmin": false },
+  "23202022@rmd.ac.in": { "password": "111523202022", "name": "JEEVAN SRESANTH S", "isAdmin": false },
+  "23202023@rmd.ac.in": { "password": "111523202023", "name": "JUVVI SIVANNARAYANA", "isAdmin": false },
+  "23202025@rmd.ac.in": { "password": "111523202025", "name": "KICCHIPATI MOKSHITH REDDY", "isAdmin": false },
+  "23202026@rmd.ac.in": { "password": "111523202026", "name": "LOHITH KUMAR M", "isAdmin": false },
+  "23202027@rmd.ac.in": { "password": "111523202027", "name": "LOKESWARAN S", "isAdmin": false },
+  "23202029@rmd.ac.in": { "password": "111523202029", "name": "MOHAMED MUZAMMIL M I", "isAdmin": false },
+  "23202030@rmd.ac.in": { "password": "111523202030", "name": "MONISHKUMAR R", "isAdmin": false },
+  "23202032@rmd.ac.in": { "password": "111523202032", "name": "PERUGU ANISH CHOWDARY", "isAdmin": false },
+  "23202033@rmd.ac.in": { "password": "111523202033", "name": "PRAVEEN KUMAR R", "isAdmin": false },
+  "23202035@rmd.ac.in": { "password": "111523202035", "name": "PRIVIN PRINCE", "isAdmin": false },
+  "23202036@rmd.ac.in": { "password": "111523202036", "name": "PULLA HARSHAVARDHAN", "isAdmin": false },
+  "23202037@rmd.ac.in": { "password": "111523202037", "name": "RAVINDHAR G", "isAdmin": false },
+  "23202038@rmd.ac.in": { "password": "111523202038", "name": "ROHIT S V", "isAdmin": false },
+  "23202039@rmd.ac.in": { "password": "111523202039", "name": "SACHIN D", "isAdmin": false },
+  "23202040@rmd.ac.in": { "password": "111523202040", "name": "SANDEEP KAUSHIK R", "isAdmin": false },
+  "23202042@rmd.ac.in": { "password": "111523202042", "name": "SANTHOSH PANDIYAN R", "isAdmin": false },
+  "23202044@rmd.ac.in": { "password": "111523202044", "name": "SARAVANAKUMAR C", "isAdmin": false },
+  "23202045@rmd.ac.in": { "password": "111523202045", "name": "SHAILESHH C", "isAdmin": true },
+  "23202046@rmd.ac.in": { "password": "111523202046", "name": "SHIVARAMAKRISHNAAN B", "isAdmin": false },
+  "23202047@rmd.ac.in": { "password": "111523202047", "name": "SIVAKUMAR M", "isAdmin": false },
+  "23202048@rmd.ac.in": { "password": "111523202048", "name": "SREEJAY V", "isAdmin": false },
+  "23202051@rmd.ac.in": { "password": "111523202051", "name": "SRIRANGAM VENKATA PADMA LAKSHMAN", "isAdmin": false },
+  "23202055@rmd.ac.in": { "password": "111523202055", "name": "VIROCHAN V", "isAdmin": false },
+  "23202056@rmd.ac.in": { "password": "111523202056", "name": "VISWA V", "isAdmin": false },
+  "23202057@rmd.ac.in": { "password": "111523202057", "name": "LOGESH B", "isAdmin": false },
+  "23202058@rmd.ac.in": { "password": "111523202058", "name": "PRAGADESH T", "isAdmin": false },
+  "23202061@rmd.ac.in": { "password": "111523202061", "name": "HEMAKUMAR S", "isAdmin": false },
+  "23202062@rmd.ac.in": { "password": "111523202062", "name": "SANJAY ADITYA", "isAdmin": false },
+  "23202063@rmd.ac.in": { "password": "111523202063", "name": "KARTHIKEYAN R", "isAdmin": false }
 }
+, null, 2));
+}
+
 
 app.use(cors({
   origin: 'http://localhost:3000',
